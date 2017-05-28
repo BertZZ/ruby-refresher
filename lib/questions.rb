@@ -72,19 +72,7 @@ end
 # even numbers come first
 # so [1, 2, 3, 4, 5, 6] becomes [[2, 4, 6], [1, 3, 5]]
 def separate_array_into_even_and_odd_numbers(array)
-  odd = []
-  even = []
-  result = []
-  array.each do |number|
-    if number % 2 == 0
-      even << number
-    else
-      odd << number
-    end
-  end
-  result << even
-  result << odd
-  result
+  [array.select(&:even?), array.select(&:odd?)]
 end
 
 # count the numbers of elements in an element which are palindromes
@@ -120,15 +108,18 @@ end
 # turn an array into itself repeated twice. So [1, 2, 3]
 # becomes [1, 2, 3, 1, 2, 3]
 def double_array(array)
+  array.concat(array)
 end
 
 # convert a symbol into a string
 def turn_symbol_into_string(symbol)
+  symbol.to_s
 end
 
 # get the average from an array, rounded to the nearest integer
 # so [10, 15, 25] should return 17
 def average_of_array(array)
+  (array.reduce(:+).to_f / (array.length)).ceil
 end
 
 # get all the elements in an array, up until the first element
@@ -136,12 +127,14 @@ end
 # [1, 3, 5, 4, 1, 2, 6, 2, 1, 3, 7]
 # becomes [1, 3, 5, 4, 1, 2]
 def get_elements_until_greater_than_five(array)
+  array.take_while {|number| number < 6}
 end
 
 # turn an array (with an even number of elements) into a hash, by
 # pairing up elements. e.g. ['a', 'b', 'c', 'd'] becomes
 # {'a' => 'b', 'c' => 'd'}
 def convert_array_to_a_hash(array)
+  h = Hash[*array]
 end
 
 # get all the letters used in an array of words and return
@@ -149,23 +142,27 @@ end
 # . e.g. the array ['cat', 'dog', 'fish'] becomes
 # ['a', 'c', 'd', 'f', 'g', 'h', 'i', 'o', 's', 't']
 def get_all_letters_in_array_of_words(array)
+  array.map { |item| item.split('') }.flatten.sort
 end
 
 # swap the keys and values in a hash. e.g.
 # {'a' => 'b', 'c' => 'd'} becomes
 # {'b' => 'a', 'd' => 'c'}
 def swap_keys_and_values_in_a_hash(hash)
+  hash.invert
 end
 
 # in a hash where the keys and values are all numbers
 # add all the keys and all the values together, e.g.
 # {1 => 1, 2 => 2} becomes 6
 def add_together_keys_and_values(hash)
+  hash.keys.reduce(:+) + hash.values.reduce(:+)
 end
 
 # take out all the capital letters from a string
 # so 'Hello JohnDoe' becomes 'ello ohnoe'
 def remove_capital_letters_from_string(string)
+  string.gsub(/[A-Z]/, '')
 end
 
 # round up a float up and convert it to an Integer,
